@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Upload</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-image: url('farmm.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, rgba(255, 0, 0, 0.8), rgba(0, 0, 255, 0.8));
+
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        form {
+            box-shadow: 3px 3px 6px salmon;
+            width: 400px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        input[type="file"] {
+            margin-bottom: 10px;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        /* CSS for image preview */
+        #imagePreview {
+            max-width: 300px;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+    <script>
+        function previewImage() {
+            const preview = document.getElementById('imagePreview');
+            const fileInput = document.querySelector('input[type=file]');
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function() {
+                preview.style.display = 'block';
+                preview.src = reader.result;
+            };
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+</head>
+<body>
+    <form action="/predict" method="post" enctype="multipart/form-data">
+        <h1>Upload an Image</h1>
+        <input type="file" name="image" accept="image/*" onchange="previewImage()">
+        <img id="imagePreview" src="" alt="Image Preview">
+        <input type="submit" value="Upload">
+    </form>
+</body>
+</html>
